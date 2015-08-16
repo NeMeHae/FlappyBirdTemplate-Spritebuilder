@@ -10,6 +10,7 @@
 #import "Obstacle.h"
 
 @implementation MainScene {
+    
     CCNode *_ground1;
     CCNode *_ground2;
     NSArray *_grounds;
@@ -162,8 +163,7 @@
     // if the left corner is one complete width off the screen,
     // move it to the right
         if (bush.position.x <= (-1 *bush.contentSize.width)) {
-            bush.position = ccp(bush.position.x +
-                                2 * bush.contentSize.width, bush.position.y);
+            bush.position = ccp(bush.position.x + 2 * bush.contentSize.width, bush.position.y);
         }
 }
  
@@ -176,8 +176,7 @@
     // if the left corner is one complete width off the screen,
     // move it to the right
         if (cloud.position.x <= (-1 * cloud.contentSize.width)) {
-            cloud.position = ccp(cloud.position.x +
-                                 2 * cloud.contentSize.width, cloud.position.y);
+            cloud.position = ccp(cloud.position.x + 2 * cloud.contentSize.width, cloud.position.y);
         }
 }
         
