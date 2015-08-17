@@ -181,6 +181,7 @@
     }
     
     physicsNode.position = ccp(physicsNode.position.x - (character.physicsBody.velocity.x * delta), physicsNode.position.y);
+}
     {
     // loop the ground
     for (CCNode *ground in _grounds) {
@@ -188,14 +189,14 @@
         CGPoint groundWorldPosition = [physicsNode convertToWorldSpace:ground.position];
         // get the screen position of the ground
         CGPoint groundScreenPosition = [self convertToNodeSpace:groundWorldPosition];
-        
+    
         // if the left corner is one complete width off the screen, move it to the right
         if (groundScreenPosition.x <= (-1 * ground.contentSize.width)) {
             ground.position = ccp(ground.position.x + 2 * ground.contentSize.width, ground.position.y);
             _parallaxBackground.position = ccp(_parallaxBackground.position.x - (character.physicsBody.velocity.x * delta), _parallaxBackground.position.y);
             
             _parallaxBackground.position = ccp(_parallaxBackground.position.x - (character.physicsBody.velocity.x * delta), _parallaxBackground.position.y);
-            
+        }
             // loop the bushes
             for (CCNode *bush in _bushes) {
                 // get the world position of the bush
@@ -255,20 +256,23 @@
             
             [super update:delta];
         }
-        @catch(NSException* ex){
+        @catch(NSException* ex)
+        {
             
         }
     }
-{
--(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair*)pair character:(CCSprite*)character level:(CCNode*)level {
-    [self gameOver];
-    return TRUE;
-}
+    }
         
--(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(CCNode *)character goal:(CCNode *)goal {
-    [goal removeFromParent];
-    points++;
-    _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
-    return TRUE;
-}
-  @end
+        -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair*)pair character:(CCSprite*)character level:(CCNode*)level {
+            [self gameOver];
+            return TRUE;
+        }
+        
+        -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(CCNode *)character goal:(CCNode *)goal {
+            [goal removeFromParent];
+            points++;
+            _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
+            return TRUE;
+        }
+        
+        @end
