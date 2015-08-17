@@ -171,7 +171,7 @@
     
     character.rotation = clampf(character.rotation, -30.f, 90.f);
     
-    if (character.physicsBody.allowsRotation) {
+    if (character.physicsBody.allowsRotation) }
         float angularVelocity = clampf(character.physicsBody.angularVelocity, -2.f, 1.f);
         character.physicsBody.angularVelocity = angularVelocity;
     }
@@ -194,11 +194,10 @@
         if (groundScreenPosition.x <= (-1 * ground.contentSize.width)) {
             ground.position = ccp(ground.position.x + 2 * ground.contentSize.width, ground.position.y);
             _parallaxBackground.position = ccp(_parallaxBackground.position.x - (character.physicsBody.velocity.x * delta), _parallaxBackground.position.y);
-        }
-    }
-}
-}
-    // loop the bushes
+            
+            _parallaxBackground.position = ccp(_parallaxBackground.position.x - (character.physicsBody.velocity.x * delta), _parallaxBackground.position.y);
+            
+            // loop the bushes
             for (CCNode *bush in _bushes) {
                 // get the world position of the bush
                 CGPoint bushWorldPosition = [_parallaxBackground convertToWorldSpace:bush.position];
@@ -211,11 +210,28 @@
                     for (CGPointObject *child in _parallaxBackground.parallaxArray) {
                         if (child.child == bush) {
                             child.offset = ccp(child.offset.x + 2*bush.contentSize.width, child.offset.y);
-       
                         }
                     }
                 }
             }
+            // loop the clouds
+            for (CCNode *cloud in _clouds) {
+                // get the world position of the cloud
+                CGPoint cloudWorldPosition = [_parallaxBackground convertToWorldSpace:cloud.position];
+                // get the screen position of the cloud
+                CGPoint cloudScreenPosition = [self convertToNodeSpace:cloudWorldPosition];
+                
+                // if the left corner is one complete width off the screen,
+                // move it to the right
+                if (cloudScreenPosition.x <= (-1 * cloud.contentSize.width)) {
+                    for (CGPointObject *child in _parallaxBackground.parallaxArray) {
+                        if (child.child == cloud) {
+                            child.offset = ccp(child.offset.x + 2*cloud.contentSize.width, child.offset.y);
+                        }
+                    }
+                }
+            }
+            
     NSMutableArray *offScreenObstacles = nil;
 
     for (CCNode *obstacle in _obstacles) {
@@ -240,20 +256,20 @@
             
             [super update:delta];
         }
-        @catch(NSException* ex)
+        @catch(NSException* ex){
+            
+        }
     }
-}
-
+{
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair*)pair character:(CCSprite*)character level:(CCNode*)level {
     [self gameOver];
     return TRUE;
 }
-
+        
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair character:(CCNode *)character goal:(CCNode *)goal {
     [goal removeFromParent];
     points++;
     _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
     return TRUE;
 }
-
- @end
+  @end
